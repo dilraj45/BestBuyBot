@@ -1,0 +1,13 @@
+{
+  "name": "BestBuyBot",
+  "description": "If the name didn't make it obvious, it's a bot for buying stuff at bestbuy.com",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [ "storage", "scripting" ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

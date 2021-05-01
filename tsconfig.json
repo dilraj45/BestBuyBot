@@ -9,5 +9,5 @@
     "moduleResolution": "node",
     "lib": ["es2017", "dom"]
   },
-  "include": ["src/background/init.ts"]
+  "include": ["src/**"]
 }

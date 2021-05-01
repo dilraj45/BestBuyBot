@@ -9,5 +9,8 @@
   "permissions": [ "storage", "scripting" ],
   "action": {
     "default_popup": "popup.html"
-  }
+  },
+  "host_permissions": [
+    "https://www.bestbuy.ca/"
+  ]
 }

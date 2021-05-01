@@ -5,7 +5,7 @@
   "main": "background.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "cpy-res": "cpy src/manifest.json dist",
+    "cpy-res": "cpy src/manifest.json dist && cpy src/ui/popup.html dist",
     "build": "NODE_ENV=production webpack --config webpack.config.js",
     "watch": "NODE_ENV=development webpack --config webpack.config.js -w",
     "release": "npm run clean && npm run cpy-res && npm run build"

@@ -28,10 +28,8 @@ chrome.storage.local.get(['tracked-products'], result => {
 });
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
-    console.log("Changes detected to storage");
     if (namespace !== "local") return;
     const manager = AvailabilityTrackerManager.getInstance();
-    console.log("Namespace is local, processing changes");
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
         if (key !== 'tracked-products') {
             continue;

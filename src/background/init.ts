@@ -1,4 +1,6 @@
 import {AvailabilityTrackerManager} from "./availability-tracker-manager";
+import {CheckoutManager} from "./checkout-manager";
+import {TrackedProductsRepository} from "../persistence/tracked-products-repository";
 
 console.log("Bootstrapping background application");
 
@@ -7,17 +9,19 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 function bootstrapTracker(region: string, sku: string) {
-    let manager = AvailabilityTrackerManager.getInstance();
-    manager.createTracker(region, sku).trackUntilAvailable()
+    let trackerManager = AvailabilityTrackerManager.getInstance();
+    let checkoutManager = new CheckoutManager();
+    trackerManager.createTracker(region, sku).trackUntilAvailable()
         .then(() => {
-            // todo Dilraj: Define checkout actions.
-            console.log("Take checkout actions")
+            TrackedProductsRepository.removeProduct(region, sku);
+            checkoutManager.checkout(region, sku);
         });
 }
 
-chrome.storage.local.get(['tracked-products'], result => {
-    const trackedEntries = result['tracked-products'];
-    const res = trackedEntries != undefined ? trackedEntries['CA'] : [];
+chrome.storage.local.get(['tracked_products'], result => {
+    
+    const trackedEntries = result?.tracked_products?.CA;
+    const res = trackedEntries != undefined ? trackedEntries : [];
     for (let sku of res) {
         try {
             bootstrapTracker('CA', sku);
@@ -31,7 +35,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     if (namespace !== "local") return;
     const manager = AvailabilityTrackerManager.getInstance();
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (key !== 'tracked-products') {
+        if (key !== 'tracked_products') {
             continue;
         }
 

@@ -57,7 +57,7 @@ export class AvailabilityTracker {
                 return;
             }
         }
-        new Error("Tracker interrupted while running");
+        throw new Error("Tracker interrupted while running");
     }
 
     public suspendTracker(): void {

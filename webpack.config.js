@@ -5,14 +5,15 @@ const { join } = require('path');
 let prodPlugins = [];
 if (process.env.NODE_ENV === 'production') {
     prodPlugins.push(
-        new optimize.AggressiveMergingPlugin(),
+        new optimize.AggressiveMergingPlugin()
     );
 }
 module.exports = {
     mode: process.env.NODE_ENV,
     devtool: 'inline-source-map',
     entry: {
-        background: join(__dirname, 'src/background/init.ts')
+        background: join(__dirname, 'src/background/init.ts'),
+        popup_controller: join(__dirname, 'src/ui/popup-controller.ts')
     },
     output: {
         path: join(__dirname, 'dist'),

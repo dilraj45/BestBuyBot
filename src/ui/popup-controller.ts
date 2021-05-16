@@ -23,7 +23,7 @@ TrackedProductsRepository.loadAllProducts('CA', skus => {
 
 // Defining form actions
 document.getElementById('register-sku').onsubmit = () => {
-    let sku = document.getElementById('sku').textContent;
+    let sku = (document.getElementById('sku') as HTMLInputElement).value;
     list.appendChild(generateListElement(sku));
     TrackedProductsRepository.appendProduct('CA', sku);
     return false;
